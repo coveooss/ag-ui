@@ -12,12 +12,20 @@ on:
       - "integrations/community/genkit/go/**"
       - ".github/workflows/unit-genkit-go.yml"
 
+permissions:
+  contents: read
+
 jobs:
   go-genkit:
     name: Go Genkit Integration Tests
     runs-on: ubuntu-latest
 
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5 # v2.19.3
+        with:
+          egress-policy: audit
+
       - name: Checkout code
         uses: actions/checkout@v4
 
